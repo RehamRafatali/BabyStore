@@ -1,0 +1,49 @@
+﻿@model RegisterViewModel
+
+
+<div class="form-group">
+    <label for="recipient-name1" class="col-form-label">Your Name</label>
+    <input type="text" class="form-control" placeholder=" " 
+            required="" asp-for="UserName">
+</div>
+<div class="form-group">
+    <label for="recipient-email" class="col-form-label">Email</label>
+    <input type="email" class="form-control" placeholder=" "
+           name="Email" id="recipient-email" required=""
+           asp-for="Email">
+</div>
+<div class="form-group">
+    <label for="password1" class="col-form-label">Password</label>
+    <input type="password" class="form-control" placeholder=" " 
+           name="Password" id="password1" required=""
+           asp-for="Password">
+</div>
+<div class="form-group">
+    <label for="password2" class="col-form-label">Confirm Password</label>
+    <input type="password" class="form-control" placeholder=" " 
+            id="password2" required=""
+           asp-for="ConfirmPassword">
+</div>
+
+
+<div class="form-group">
+    <label class="col-form-label">Address Line 1</label>
+    <input  class="form-control" placeholder=" "
+            required="" asp-for="Address.AddressLine1">
+</div>
+
+<div class="form-group">
+    <label class="col-form-label">Town</label>
+    <input class="form-control" placeholder=" " 
+           asp-for="Address.Town" required="">
+</div>
+<div class="form-group">
+    <label class="col-form-label">County</label>
+    <input class="form-control" placeholder=" " 
+           asp-for="Address.County" required="">
+</div>
+<div class="form-group">
+    <label class="col-form-label">Postcode</label>
+    <input  class="form-control" placeholder=" "
+           asp-for="Address.Postcode" required="">
+</div>

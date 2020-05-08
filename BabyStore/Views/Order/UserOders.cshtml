@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "UserOders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="bg-primary text-white text-center p-2 m-2">
+        <h2>All Oders Of @Model.First().UserID</h2>
+    </div>
+
+@foreach (Order order in Model)
+{
+    <div class="bg-info text-white text-center p-1 m-1">
+        <h4>
+            Order ID:@order.OrderID<span>    </span>  
+            Made at:@order.DateCreated<br />
+            Total Price:@order.TotalPrice
+        </h4>
+    </div>
+    
+    <table class="table table-striped">
+        <tr><th>Item(s)</th><th>Quantity</th><th>Unit Price</th></tr>
+        @foreach (OrderLine orderLine in order.OrderLines)
+        {
+            <tr>
+                <td>@orderLine.ProductName</td>
+                <td>@orderLine.Quantity</td>
+                <td>@orderLine.UnitPrice</td>
+                
+            </tr>
+        }
+    </table>
+}
+
+

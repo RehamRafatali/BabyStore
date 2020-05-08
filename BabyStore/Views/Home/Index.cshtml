@@ -1,0 +1,249 @@
+﻿@model ProductsIndexVM
+
+
+
+
+@if (ViewBag.All == true)
+{
+    <!-- breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-action="Index">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                @Model.Categories.First(c => c.ID == Model.CategoryId).Name
+            </li>
+        </ol>
+    </nav>
+    <!-- //breadcrumbs -->
+    <!-- Shop -->
+    <div class="innerf-pages section">
+        <div class="fh-container mx-auto">
+            <div class="row my-lg-5 mb-5">
+                <!-- grid left -->
+                <div class="side-bar col-lg-3">
+                    <!--preference -->
+                    <!-- // preference -->
+                    <div class="search-hotel">
+
+
+                        <form asp-action="Index"
+                              asp-route-All="true"
+                              asp-route-categoryId="@Model.CategoryId"
+                              method="post">
+
+                            <h3 class="shopf-sear-headits-sear-head">
+                                Sort By Price
+                            </h3>
+                            <ul>
+                                <li>
+                                    <input type="radio"
+                                           name="sortBy" value="Low"
+                                           asp-for="SortBy">
+                                    <label for="cat1">Price low to high</label>
+                                </li>
+
+                                <li>
+                                    <input type="radio"
+                                           name="sortBy" value="High"
+                                           asp-for="SortBy">
+
+                                    <label for="cat1">Price high to low</label>
+                                </li>
+
+                            </ul>
+                            <input type="submit" value="Search">
+
+
+                        </form>
+                    </div>
+                    <!-- reviews -->
+                    <div class="customer-rev left-side">
+                        <h3 class="shopf-sear-headits-sear-head">Customer Review</h3>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <span>5.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>4.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>3.5</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>3.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>2.5</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //reviews -->
+                </div>
+                <!-- //grid left -->
+                <!-- grid right -->
+                <div class="col-lg-9 mt-lg-0 mt-5 right-product-grid">
+
+                    <!-- card group 2 -->
+                    <div class="card-group my-5">
+
+                        <!-- card -->
+                        @foreach (Product product in Model.Products)
+                        {
+
+                            <div class="col-lg-5 col-sm-6 p-0">
+                                <div class="card product-men p-3">
+                                    <div style="height:260px;width:250px;" class="men-thumb-item">
+                                        @if (product.ProductImageMappings != null && product.ProductImageMappings.Any())
+                                        {
+                                            foreach (ProductImage image in ViewBag.images)
+                                            {
+                                                if (product.ProductImageMappings
+                                                       .OrderBy(pim => pim.ImageNumber).ElementAt(0)
+                                                       .ProductImageID == image.ID)
+                                                {
+
+                                                    <img src="~/ProductImages/@(image.FileName)" alt="img"
+                                                         class="card-img-top">
+                                                }
+                                            }
+                                        }
+
+
+                                        <div class="men-cart-pro">
+                                            <div class="inner-men-cart-pro">
+                                                <a asp-action="Details"
+                                                   asp-route-id="@product.ID"
+                                                   class="link-product-add-cart">Quick View</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.Partial("CardContent", product)
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                    <!-- //card group -->
+                    <div class="text-center">
+                        @for (int i = 1; i <= Model.Products.TotalPageCount; i++)
+                        {
+                            <a asp-action="Index" asp-route-page="@i" asp-route-All="true"
+                               asp-route-categoryId="@Model.CategoryId"
+                               class="btn @(Model.Products.PageIndex==i?"btn-primary":"btn-outline-primary")">@i</a>
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!--// Shop -->
+}
+else
+{
+    <section class="tabs_pro py-md-3 pt-sm-3 pb-3">
+
+        <div class="tabs tabs-style-line pt-md-3">
+
+            <div class="tab-content py-sm-3">
+                @if (Model.CategoryId != 0)
+                {
+                    <div>
+                        <div style="float:left;" class="item">
+                            <div class="product-men p-3 text-center">
+                                <img src="/images/p2.png" class="img-responsive"
+                                     alt="" />
+                            </div>
+                        </div>
+                        <a asp-action="Index" asp-route-All="True"
+                           asp-route-categoryId="@Model.CategoryId"
+                           class="btn btn-lg bg-info text-white">view more</a>
+                    </div>
+                }
+                <div id="owl-demo" class="owl-carousel text-center">
+                    @foreach (Product product in Model.Products)
+                    {
+                        <div class="item">
+                            <!-- card -->
+                            <div class="card product-men p-3">
+                                <div style="height:370px;"  class="men-thumb-item">
+                                    @if (product.ProductImageMappings != null && product.ProductImageMappings.Any())
+                                    {
+                                        foreach (ProductImage image in ViewBag.images)
+                                        {
+                                            if (product.ProductImageMappings
+                                                   .OrderBy(pim => pim.ImageNumber).ElementAt(0)
+                                                   .ProductImageID == image.ID)
+                                            {
+
+                                                <img src="~/ProductImages/@(image.FileName)" alt="img"
+                                                     class="card-img-top">
+                                            }
+                                        }
+                                    }
+
+                                    <div class="men-cart-pro">
+                                        <div class="inner-men-cart-pro">
+                                            <a asp-action="Details"
+                                               asp-route-id="@product.ID"
+                                               class="link-product-add-cart">Quick View</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                @Html.Partial("CardContent", product)
+                            </div>
+
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+}
+
+

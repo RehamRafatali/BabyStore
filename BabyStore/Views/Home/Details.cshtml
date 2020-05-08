@@ -1,0 +1,114 @@
+﻿@model ProductDetails
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-action="Index"
+                   asp-route-categoryId="@Model.Product.CategoryID">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-action="Index"
+                   asp-route-categoryId="@Model.Product.CategoryID"
+                   asp-route-All="true">
+                    @Model.Product.Category.Name
+
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                @Model.Product.Name
+
+            </li>
+        </ol>
+    </nav>
+
+<div class="innerf-pages section py-3">
+    <div class="container">
+        <div class="row my-sm-5">
+            <div class="col-lg-4 single-right-left">
+                <div class="grid images_3_of_2">
+                    <div class="flexslider1">
+                        <ul class="slides">
+                            @foreach (var item in Model.ProductImages)
+                            {
+                            <li data-thumb="/ProductImages/@item.FileName">
+                                <div class="thumb-image">
+                                    <img src="/ProductImages/@item.FileName" data-imagezoom="true" alt=" " class="img-fluid">
+                                </div>
+                            </li>
+                            }
+                            
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 mt-lg-0 mt-5 single-right-left simpleCart_shelfItem">
+                <h2>
+                   @Model.Product.Name
+                </h2>
+                <div class="caption">
+
+                    <ul class="rating-single">
+                        <li>
+                            <a href="#">
+                                <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa fa-star yellow-star" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"> </div>
+                    <h4>
+                       @Model.Product.Price.ToString("c")
+                    </h4>
+                </div>
+                <div class="desc_single">
+                    <h3>Description</h3>
+                    <p>
+                       @Model.Product.Description
+                    </p>
+                </div>
+
+
+                <div class="occasion-cart">
+                    <div class="chr single-item single_page_b">
+                        <form asp-controller="Basket"
+                              asp-action="Add"
+                              asp-route-productID="@Model.Product.ID"
+                              asp-route-returnUrl="@Context.Request.PathAndQuery()"
+                              method="post">
+                            @*<input type="hidden" name="cmd" value="_cart">
+        <input type="hidden" name="add" value="1">
+        <input type="hidden" name="hub_item" value=" Formal Men's Blazer">
+        <input type="hidden" name="amount" value="15.99">*@
+                            <input name="quantity" type="number" min="1" max="5" value="1" />
+                            <button type="submit" class="hub-cart phub-cart btn">
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                            </button>
+                            <a href="#" data-toggle="modal" data-target="#myModal1"></a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

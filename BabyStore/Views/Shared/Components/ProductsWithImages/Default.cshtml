@@ -1,0 +1,9 @@
+﻿@model Product
+
+<span class="text-primary">@Model.Name</span>
+<br />   
+    <img style="height:150px;width:150px;"  class="img-thumbnail"
+      src="~/ProductImages/@(Model.ProductImageMappings
+          .OrderBy(i=>i.ImageNumber)
+          .ElementAt(0).ProductImage.FileName)"/>
+

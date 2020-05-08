@@ -1,0 +1,15 @@
+﻿@model Category
+
+    <form asp-action="EditCategory" method="post">
+        <div class="row">
+            <div class="col-1">
+                <input disabled asp-for="ID" class="form-control"/>
+            </div>
+            <div class="col">
+                <input class="form-control" asp-for="Name"  placeholder="Category Name" />
+            </div>
+            <div class="col">
+                <input type="submit" class="btn btn-primary" value="Save" />
+            </div>
+        </div>
+    </form>

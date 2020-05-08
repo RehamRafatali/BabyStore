@@ -1,0 +1,91 @@
+﻿@using BabyStore.Extensions
+@model BasketViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h2>Your Basket</h2>
+
+    <div>
+        @if (Model.BasketLines.Count > 0)
+        {
+            <form asp-action="UpdateBasket"
+                  asp-route-returnUrl="/">
+                <button class="btn btn-success" type="submit">Update Basket</button>
+                <hr />
+                <div class="row">
+                    <div class="col-4"><label class="font-weight-bold">Item</label></div>
+                    <div class="col-3"><label class="font-weight-bold">Quantity</label></div>
+                    <div class="col-1"><label class="font-weight-bold">price</label></div>
+                    <div class="col-4"><label class="font-weight-bold">SubTotal</label></div>
+                </div>
+                <hr />
+
+
+                @for (int i = 0; i < Model.BasketLines.Count; i++)
+                {
+                    <input type="hidden" name="lines[@i].ID" value="@(Model.BasketLines[i].ID)" />
+                    <input type="hidden" name="lines[@i].ProductID" value="@(Model.BasketLines[i].ProductID)" />
+                    <input type="hidden" name="lines[@i].BasketID" value="@(Model.BasketLines[i].BasketID)" />
+
+
+                    Product product = Model.Products
+                .First(p => p.ID == Model.BasketLines[i].ProductID);
+                    <div class="row">
+                        <div class="col-4">
+                            <a asp-controller="Home" asp-action="Details"
+                               asp-route-id="@Model.BasketLines[i].ProductID">
+                                @await Component.InvokeAsync("ProductsWithImages", new { @id = product.ID })
+                            </a>
+                        </div>
+
+                        <div class="col-3">
+                            <input type="number" min="0" max="5"
+                                   name="lines[@i].Quantity" value="@Model.BasketLines[i].Quantity" />
+
+                        </div>
+
+                        <div class="col-1">
+                            @product.Price.ToString("c")
+
+                        </div>
+                        <div class="col-1">
+                            @((Model.BasketLines[i].Quantity *
+                        product.Price).ToString("c"))
+
+                        </div>
+                        <div class="col-1">
+                            <a asp-action="Delete" asp-route-productID="@product.ID"
+                               class="btn btn-danger">
+                                Remove
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <hr />
+                }
+            </form>
+            <div class="row">
+                <div class="col-8"><label class="font-weight-bold">Total Cost:</label></div>
+                <div class="col-1">
+                    <label class="font-weight-bold">@Model.TotalCost.ToString("c")</label>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>Your Basket is empty</p>
+        }
+    </div>
+    <div class="text-center text-white m-2 p-2">
+        <a href="@ViewBag.returnUrl"
+           class="btn btn-primary">Continue Shopping</a>
+
+        <a asp-action="Index" asp-controller="Order"
+           class="btn btn-success">Place Order</a>
+
+    </div>
+
+

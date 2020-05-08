@@ -1,0 +1,37 @@
+﻿@addTagHelper BabyStore.TagHelpers.SelectOptionTagHelper, BabyStore
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        .placeholder {
+            visibility: collapse;
+            display: none;
+        }
+
+            .placeholder:only-child {
+                visibility: visible;
+                display: flex;
+            }
+    </style>
+</head>
+<body class="m-2 p-2">
+    <div class="bg-primary m-2 p-2">
+        <div class="row text-white">
+            <div class="col-7">
+                <h2 class="text-center">@ViewData["Title"]</h2>
+            </div>
+            <div class="col-5">
+                @await Component.InvokeAsync("CategoryComponent")
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+</body>
+</html>

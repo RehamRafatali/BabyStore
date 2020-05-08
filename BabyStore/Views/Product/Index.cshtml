@@ -1,0 +1,76 @@
+﻿@using BabyStore.Models
+@addTagHelper BabyStore.TagHelpers.SelectOptionTagHelper, BabyStore
+
+@model ProductsIndexVM
+
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <div class="row">
+        <form asp-action="Index" class="form-inline"
+              asp-route-categoryId="@Model.CategoryId">
+            <select asp-for="CategoryId"
+                    asp-items="@(new SelectList(Model.Categories,"ID","Name"))"
+                    class="form-control">
+                <option selected value="0">All</option>
+
+            </select>
+
+           
+
+
+            <input type="submit" value="Filter" class="btn btn-sm btn-primary" />
+        </form>
+    </div>
+
+    <div class="row p-2">
+        <div class="col-1 font-weight-bold">Id</div>
+        <div class="col font-weight-bold">Name</div>
+        <div class="col font-weight-bold">Description</div>
+        <div class="col font-weight-bold">Price</div>
+        <div class="col font-weight-bold">Category</div>
+        <div class="col"></div>
+    </div>
+    @foreach (Product p in Model.Products)
+    {
+        <div class="row p-2">
+            <div class="col-1">@p.ID</div>
+            <div class="col">@p.Name</div>
+            <div class="col">@p.Description</div>
+            <div class="col">@p.Price</div>
+            <div class="col">@p.Category.Name</div>
+            <div class="col">
+                <form asp-action="Delete" method="post">
+                    <a asp-action="UpdateProduct" asp-route-id="@p.ID"
+                       class="btn btn-outline-primary">
+                        Edit
+                    </a>
+                    <input type="hidden" name="Id" value="@p.ID" />
+                    <button type="submit" class="btn btn-outline-danger">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+
+
+
+    <div class="text-center p-2">
+        <a asp-action="UpdateProduct" asp-route-id="0"
+           class="btn btn-primary">Add</a>
+    </div>
+
+    @for (int i = 1; i <= Model.Products.TotalPageCount; i++)
+    {
+        <a asp-action="Index" asp-route-page="@i"
+           asp-route-categoryId="@Model.CategoryId"
+           class="btn @(Model.Products.PageIndex==i?"btn-primary":"btn-outline-primary")">@i</a>
+    }
+
+
+    @* <div page-model="@Model" page-action="Index"></div>*@
+</div>

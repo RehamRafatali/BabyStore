@@ -1,0 +1,504 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BabyStore</title>
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+       <!-- Custom Theme files -->
+    <link href="/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+    <!-- shop css -->
+    <link href="/css/shop.css" type="text/css" rel="stylesheet" media="all">
+    <link href="/css/flexslider.css" type="text/css" rel="stylesheet" media="all">
+    <link href="/css/style.css" type="text/css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <!-- Owl-Carousel-CSS -->
+    <link href="/css/style.css" type="text/css" rel="stylesheet" media="all">
+    <!-- font-awesome icons -->
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <!-- //Custom Theme files -->
+    <!-- online-fonts -->
+    <link href="//fonts.googleapis.com/css?family=Elsie+Swash+Caps:400,900" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+    <!-- //online-fonts -->
+</head>
+<body>
+
+    <!-- signup Modal -->
+    <div class="modal fade" id="myModal_btn" tabindex="-1" role="dialog" aria-labelledby="myModal_btn" aria-hidden="true">
+        <div class="agilemodal-dialog modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register Now</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-3 pb-5 px-sm-5">
+                    <div class="row">
+                        <div class="col-md-6 mx-auto align-self-center">
+                            <img src="/images/p3.png" class="img-fluid" alt="login_image" />
+                        </div>
+                        <div class="col-md-6">
+                            <form asp-action="Create" asp-controller="Admin"
+                                  asp-route-returnUrl="@Context.Request.PathAndQuery()"
+                                  method="post">
+                                @Html.Partial("SignUp", new RegisterViewModel())
+
+
+                                <div class="sub-w3l">
+                                    <div class="sub-agile">
+                                        <input type="checkbox" id="brand2" value="" required>
+                                        <label for="brand2" class="mb-3">
+                                            <span></span>I Accept to the Terms & Conditions
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="right-w3l">
+                                    <input type="submit" class="form-control" value="Register">
+                                </div>
+                            </form>
+                            <p class="text-center mt-3">
+                                Already a member?
+                                <a href="#" data-toggle="modal" data-target="#exampleModal1" class="text-dark login_btn">
+                                    Login Now
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //signup modal -->
+    <!-- signin Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModal1" aria-hidden="true">
+        <div class="agilemodal-dialog modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body  pt-3 pb-5 px-sm-5">
+                    <div class="row">
+                        <div class="col-md-6 align-self-center">
+                            <img src="/images/p3.png" class="img-fluid" alt="login_image" />
+                        </div>
+                        <div class="col-md-6">
+                            <form asp-controller="Admin" asp-action="Login"
+                                  asp-route-returnUrl="@Context.Request.PathAndQuery()"
+                                  method="post">
+                                @Html.Partial("SignIn",new LoginViewModel())
+                            </form>
+                            <p class="text-center mt-3">
+                                New Member?
+                                <a href="#" data-toggle="modal" data-target="#myModal_btn" class="text-dark login_btn">
+                                    Register Now
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- signin Modal -->
+    <!-- header -->
+    <header>
+        <div class="container">
+            <!-- top nav -->
+            <nav class="top_nav d-flex pt-3 pb-1">
+                <!-- logo -->
+                <h1>
+                    <a class="navbar-brand" href="#">
+                        fh
+                    </a>
+                </h1>
+                
+                <!-- //logo -->
+                <div class="w3ls_right_nav ml-auto d-flex">
+                   
+                   
+                    <!-- search form -->
+                    <form class="nav-search form-inline my-0 form-control"
+                          asp-controller="Home"
+                          asp-action="Details"
+                          method="get">
+
+
+
+                        @await Component.InvokeAsync("LayoutCategory", new { @nav = false })
+                        <input class="btn btn-outline-secondary  ml-3 my-sm-0"
+                               type="submit" value="Search">
+                    </form>
+                    <!-- search form -->
+                    <div class="nav-icon d-flex">
+                        @if (string.IsNullOrEmpty(Context.User.Identity.Name)) { 
+                            <!-- sigin and sign up -->
+                        <a class="text-dark login_btn align-self-center mx-3"
+                           href="#myModal_btn" data-toggle="modal"
+                           data-target="#myModal_btn">
+                            <i class="far fa-user"></i>
+                        </a>
+                        <!-- sigin and sign up -->}
+                        @if (!string.IsNullOrEmpty(Context.User.Identity.Name))
+                        {
+
+                            <div>
+                                <a asp-action="Logout" asp-controller="Admin"
+                                   asp-route-returnUrl="@Context.Request.PathAndQuery()">Logout</a>
+                                <p class="text-info font-weight-bold">@Context.User.Identity.Name</p>
+                            </div>
+                        }
+                        <!-- shopping cart -->
+
+                        <div class="cart-mainf">
+
+                            <div class="hubcart hubcart2 cart cart box_1">
+
+                                <form asp-controller="Basket"
+                                      asp-action="Index"
+                                      asp-route-returnUrl="@Context.Request.PathAndQuery()">
+                                    <input type="hidden" name="cmd" value="_cart">
+                                    <input type="hidden" name="display" value="1">
+
+
+                                    <button class="btn top_hub_cart mt-1" type="submit"
+                                            name="submit" value="" title="Cart">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div>
+                            @await Component.InvokeAsync("BasketSummery")
+                        </div>
+                        <!-- //shopping cart ends here -->
+                    </div>
+                </div>
+            </nav>
+            <!-- //top nav -->
+            
+            <!-- bottom nav -->
+            <nav class="navbar navbar-expand-lg navbar-light justify-content-center">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto text-center">
+                        <li class="nav-item">
+                            <a class="nav-link  active" href="index.html">
+                                Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog.html">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- //bottom nav -->
+
+            <section class="tabs_pro py-md-3 pt-sm-3 pb-3">
+                @*<h5 class="head_agileinfo text-center text-capitalize pb-5">
+            <span>s</span>mart clothing
+        </h5>*@
+                
+                <div class="tabs tabs-style-line pt-md-2">
+                    @await Component.InvokeAsync("LayoutCategory", new { @nav = true })
+
+                </div>
+            </section>
+
+
+
+            <!-- //bottom nav -->
+        </div>
+        <!-- //header container -->
+    </header>
+    <!-- //header -->
+    <div class="container">
+        @RenderBody()
+    </div>
+    <!-- footer -->
+    <footer>
+        <div class="footerv2-w3ls">
+            <div class="footer-w3lagile-innerr">
+
+                <div class="footer-bottomv2 py-1">
+                    <div class="container">
+                        <ul class="bottom-links-agile">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="shop.html">Shop</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+                            </li>
+
+                        </ul>
+                        <h3 class="text-center follow">Follow Us</h3>
+                        <ul class="social-iconsv2 agileinfo">
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid py-1 footer-copy_w3ls">
+                <div class="d-lg-flex justify-content-between">
+                    <div class="mt-2 sub-some align-self-lg-center">
+                        <h5>Payment Method</h5>
+                        <ul class="mt-4">
+                            <li class="list-inline-item">
+                                <img src="/images/pay2.png" alt="">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="/images/pay5.png" alt="">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="/images/pay3.png" alt="">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="/images/pay7.png" alt="">
+                            </li>
+                            <li class="list-inline-item">
+                                <img src="/images/pay8.png" alt="">
+                            </li>
+                            <li class="list-inline-item ">
+                                <img src="/images/pay9.png" alt="">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cpy-right align-self-center">
+                        <h2 class="agile_btxt">
+                            <a href="index.html">
+                                <span>f</span>ashion
+                                <span>h</span>ub
+                            </a>
+                        </h2>
+                        <p>
+                            © 2018 Fashion Hub. All rights reserved | Design by
+                            <a href="http://w3layouts.com" class="text-secondary"> W3layouts.</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- //footer -->
+    <!-- js -->
+    <script src="/js/jquery-2.2.3.min.js"></script>
+    <!-- //js -->
+    <!-- script for show signin and signup modal -->
+    <script>
+        $(document).ready(function () {
+            $("#myModal_btn").modal("hide");
+        });
+    </script>
+    <!-- //script for show signin and signup modal -->
+    <!-- smooth dropdown -->
+    <script>
+        $(document).ready(function () {
+            $('ul li.dropdown').hover(function () {
+                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(200);
+            }, function () {
+                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+            });
+        });
+    </script>
+    <!-- //smooth dropdown -->
+    <!-- script for password match -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+    </script>
+    <!-- script for password match -->
+    <!-- Banner Responsiveslides -->
+    <script src="/js/responsiveslides.min.js"></script>
+    <script>
+        // You can also use "$(window).load(function() {"
+        $(function () {
+            // Slideshow 4
+            $("#slider3").responsiveSlides({
+                auto: false,
+                pager: true,
+                nav: false,
+                speed: 500,
+                namespace: "callbacks",
+                before: function () {
+                    $('.events').append("<li>before event fired.</li>");
+                },
+                after: function () {
+                    $('.events').append("<li>after event fired.</li>");
+                }
+            });
+
+        });
+
+    </script>
+    <!-- // Banner Responsiveslides -->
+    <!-- Product slider Owl-Carousel-JavaScript -->
+    <script src="/js/owl.carousel.js"></script>
+    <script>
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            items: 4,
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: true,
+            responsive: {
+                320: {
+                    items: 1,
+                },
+                568: {
+                    items: 2,
+                },
+                991: {
+                    items: 3,
+                },
+                1050: {
+                    items: 4
+                }
+            }
+        });
+    </script>
+    <!-- //Product slider Owl-Carousel-JavaScript -->
+    <!-- FlexSlider -->
+    <script src="/js/jquery.flexslider.js"></script>
+    <script>
+        // Can also be used with $(document).ready()
+        $(window).load(function () {
+            $('.flexslider1').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails"
+            });
+        });
+    </script>
+    <!-- //FlexSlider-->
+    <!-- zoom -->
+    <script src="/js/imagezoom.js"></script>
+    <!-- zoom-->
+    <!-- cart-js -->
+    <script src="/js/minicart.js"></script>
+    @*<script>
+        hub.render();
+
+        hub.cart.on('new_checkout', function (evt) {
+            var items, len, i;
+
+            if (this.subtotal() > 0) {
+                items = this.items();
+
+                for (i = 0, len = items.length; i < len; i++) { }
+            }
+        });
+    </script>*@
+    <!-- //cart-js -->
+    <!-- start-smooth-scrolling -->
+    <script src="/js/move-top.js"></script>
+    <script src="/js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <script src="/js/SmoothScroll.min.js"></script>
+    <!-- //smooth-scrolling-of-move-up -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/js/bootstrap.js"></script>
+
+
+</body>
+
+
+</html>

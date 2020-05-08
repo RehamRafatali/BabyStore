@@ -1,0 +1,23 @@
+﻿@model CategoryProductCount
+
+<select asp-items="Model.CatFilterItems" class="form-control">
+    <option selected>Category and Product Count</option>
+</select>
+
+@*<table class="table table-sm table-bordered">
+    
+    <tr>
+        @foreach (var item in Model.CatsWithCount)
+        {
+            <th>@item.CategoryName</th>
+        }
+    </tr>
+    <tr>
+        @foreach (var item in Model.CatsWithCount)
+        {
+            <td class="text-right">@item.ProductCount</td>
+        }
+
+    </tr>
+       
+</table>*@

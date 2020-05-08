@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerator<IFormFile>
+@{
+    ViewData["Title"] = "Upload Images";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<form enctype="multipart/form-data" asp-action="Create" method="post">
+    @Html.ValidationSummary()
+    <div class="form-group">
+        <input type="file" multiple name="files" id="files"
+               class="form-control"/>
+    </div>
+    <input type="submit" value="Upload" class="btn btn-outline-primary"/>
+</form>

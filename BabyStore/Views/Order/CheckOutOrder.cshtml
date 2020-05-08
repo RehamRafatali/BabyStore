@@ -1,0 +1,60 @@
+﻿@model BasketViewModel
+@{
+    ViewData["Title"] = "CheckOutOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="row">
+        <div class="col-4 font-weight-bold">User ID</div>
+        <div class="col-8 font-weight-bold text-left">@(Model.BasketLines
+        .First().BasketID)</div>
+    </div>
+<hr />
+    <div class="row">
+        <div class="col-8">
+            <div class="row">
+                <div class="col-4 font-weight-bold">Item(s)</div>
+                <div class="col-2 font-weight-bold">Quantity</div>
+                <div class="col-2 font-weight-bold">Unit Price</div>
+            </div>
+        </div>
+                    
+           <div class="col-4 font-weight-bold font-italic">Billing Address</div>
+    </div>
+<hr />
+
+
+    <div class="row">
+        <div class="col-8">
+            @foreach (BasketLine line in Model.BasketLines)
+            {
+                Product product = Model.Products
+           .First(p => p.ID == line.ProductID);
+            <div class="row">
+                <div class="col-4">@product.Name</div>
+                <div class="col-2">@line.Quantity</div>
+                <div class="col-2">@product.Price</div>
+            </div>
+    }
+        </div>
+        <div class="col-4">
+            <label class="font-weight-bold">AddressLine1:</label>
+            @Model.Address.AddressLine1
+            <br />
+            <label class="font-weight-bold">Town:</label>
+            @Model.Address.Town
+            <br />
+            <label class="font-weight-bold">County:</label>
+            @Model.Address.County
+            <br />
+            <label class="font-weight-bold">Postcode:</label>
+            @Model.Address.Postcode
+            <br />
+        </div>
+    </div>
+<hr />
+    <div class="row">
+        <div class="col-4 font-weight-bold">total cost:</div>
+        <div class="col-8 font-weight-bold text-left">
+            @Model.TotalCost
+    </div>
+    </div>

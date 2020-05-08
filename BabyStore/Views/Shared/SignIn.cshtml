@@ -1,0 +1,15 @@
+﻿@model  LoginViewModel
+<div class="form-group">
+    <label class="col-form-label">Email</label>
+    <input type="text" class="form-control" placeholder=" "
+           asp-for="Email"
+           id="recipient-name" required="">
+</div>
+<div class="form-group">
+    <label class="col-form-label">Password</label>
+    <input type="password" class="form-control" placeholder=" "
+           asp-for="Password" required="">
+</div>
+<div class="right-w3l">
+    <input type="submit" class="form-control" value="Login">
+</div>

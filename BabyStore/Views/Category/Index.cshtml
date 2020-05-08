@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="mt-3">
+    <div class="row p-2">
+        <div class="col-1 font-weight-bold">ID</div>
+        <div class="col font-weight-bold">Category Name</div>
+        <div class="col"></div>
+    </div>
+    
+
+    @Html.Partial("CategoryEditor",new Category())
+
+
+<div>
+    <div class="row placeholder">
+        <div class="col text-center p-2">No Data</div>
+    </div>
+
+    @foreach (Category c in Model)
+    {
+        if (ViewBag.CategoryId == c.ID)
+        {
+            @Html.Partial("CategoryEditor", c)
+        }
+        else { 
+<div class="row p-2">
+    <div class="col-1">@c.ID</div>
+    <div class="col">@c.Name</div>
+    <div class="col">
+        <form asp-action="Delete" method="post" asp-route-id="@c.ID">
+            <a asp-action="Edit" asp-route-id="@c.ID"
+               class="btn btn-outline-primary">Edit</a>
+            <button type="submit" class="btn btn-outline-danger">
+                Delete
+            </button>
+        </form>
+    </div>
+</div>
+            }
+        
+    }
+
+</div>
+    
+   
+</div>
+

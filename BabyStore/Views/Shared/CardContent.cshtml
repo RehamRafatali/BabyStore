@@ -1,0 +1,30 @@
+﻿@model Product
+<!-- card body -->
+<div class="card-body  py-3 px-2">
+    <h5 class="card-title text-capitalize">
+        @Model.Name
+    </h5>
+    <div>
+        <p class="text-dark font-weight-bold">
+            @Model.Price
+        </p>
+    </div>
+</div>
+<!-- card footer -->
+<div class="card-footer d-flex justify-content-end">
+    <form asp-controller="Basket" asp-action="Add"
+          asp-route-productId="@Model.ID" 
+          asp-route-returnUrl="@Context.Request.PathAndQuery()"
+
+          method="post">
+        @*<input type="hidden" name="cmd" value="_cart">
+        <input type="hidden" name="add" value="1">
+        <input type="hidden" name="hub_item" value="Full Length Party Dress">
+        <input type="hidden" name="amount" value="20.00">*@
+        <button type="submit" class="hub-cart phub-cart btn">
+            <i class="fa fa-cart-plus" aria-hidden="true"></i>
+            
+        </button>
+     @*   <a href="#" data-toggle="modal" data-target="#myModal1"></a>*@
+    </form>
+</div>

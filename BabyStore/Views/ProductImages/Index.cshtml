@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ProductImage>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+@foreach (var item in Model)
+{
+    <h5>@item.FileName</h5>
+}

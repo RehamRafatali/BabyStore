@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Category>
+
+   
+    
+<select class="form-control input-lg" name="id">
+        <option value="all">Search our store</option>
+        @foreach (Category category in Model)
+        {
+<optgroup label="@category.Name">
+    @foreach (Product product in category.Products)
+    {
+        <option value="@product.ID">
+    @product.Name
+        </option>
+    }
+</optgroup>
+        }
+     
+       
+    </select>
